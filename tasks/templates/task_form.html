@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static "css/output.css" %}">
+</head>
+<body>
+    <div class = "w-1/2 mx-auto mt-20">
+        <div>
+            {% if message %}
+            {{message}}
+            {% endif %}
+        </div>
+        <form method = "POST">
+            <div class= "pt-2 w-full">
+
+            </div>
+            {% csrf_token %}
+            {{form.as_p}}
+            <button class= "p-2 m-2 border border-gray-300 rounded-xl bg-blue-500 text-white w-32 hover:bg-gray-700 hover:text-white mx-auto" type = "submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>

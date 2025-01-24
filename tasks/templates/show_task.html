@@ -7,14 +7,22 @@
 </head>
 <body>
     <div>
-        <ul>
-            {% for task in tasks %}
-            <li>{{task}}</li>
-            <p><small>{{task.status}}</small></p>
-            {% endfor %}
-        </ul>
-
-        <div>{{task3}}</div>
+        {% comment %} <ol>
+        {% for task in tasks %} 
+            <li>
+                {{task.title}}
+                {% for emp in task.assigned_to.all %}
+                    <p>{{emp.name}}</p>
+                {% endfor %}
+            </li>
+        {% endfor %}
+    </ol> {% endcomment %}
+    {% for project in projects %}
+    <p>{{project.name}}</p>
+    <p>{{project.total_task}}</p>
+    {% endfor %}
+    <p>Total task : {{task_count.total}}</p>
+    
     </div>
 </body>
 </html>

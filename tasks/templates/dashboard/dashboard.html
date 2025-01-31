@@ -53,10 +53,11 @@
          {% comment %} Stats Grid  {% endcomment %}
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <!-- Total Task -->
+          <a href="{% url 'manager-dashboard' %}?type=all">
           <div class="bg-white p-6 rounded-lg shadow-sm">
             <h2 class="text-base font-medium text-gray-500 mb-4">TOTAL TASK</h2>
             <div class="flex items-center justify-between">
-              <p class="text-3xl font-semibold mb-1">3</p>
+              <p class="text-3xl font-semibold mb-1">{{counts.total_task}}</p>
               <button
                 class="w-10 h-10 text-xl bg-blue-100 text-blue-500 rounded-full drop-shadow-sm"
               >
@@ -65,13 +66,15 @@
             </div>
             <p class="text-sm font-medium text-gray-400">111 Last Month</p>
           </div>
+        </a>
            {% comment %} Completed Task  {% endcomment %}
+            <a href="{% url 'manager-dashboard' %}?type=completed">
           <div class="bg-white p-6 rounded-lg shadow-sm">
             <h2 class="text-base font-medium text-gray-500 mb-4">
               CCOMPLETED TASK
             </h2>
             <div class="flex items-center justify-between">
-              <p class="text-3xl font-semibold mb-1">1</p>
+              <p class="text-3xl font-semibold mb-1">{{counts.completed_task}}</p>
               <button
                 class="w-10 h-10 text-xl bg-green-100 text-green-500 rounded-full drop-shadow-sm"
               >
@@ -80,13 +83,15 @@
             </div>
             <p class="text-sm font-medium text-gray-400">111 Last Month</p>
           </div>
+        </a>
            {% comment %} Task in progress  {% endcomment %}
+            <a href="{% url 'manager-dashboard' %}?type=in-progress">
           <div class="bg-white p-6 rounded-lg shadow-sm">
             <h2 class="text-base font-medium text-gray-500 mb-4">
               TASK IN PROGRESS
             </h2>
             <div class="flex items-center justify-between">
-              <p class="text-3xl font-semibold mb-1">1</p>
+              <p class="text-3xl font-semibold mb-1">{{counts.in_progress_task}}</p>
               <button
                 class="w-10 h-10 text-xl bg-yellow-100 text-yellow-500 rounded-full drop-shadow-sm"
               >
@@ -95,12 +100,14 @@
             </div>
             <p class="text-sm font-medium text-gray-400">111 Last Month</p>
           </div>
+        </a>
 
            {% comment %} Todos  {% endcomment %}
+            <a href="{% url 'manager-dashboard' %}?type=pending">
           <div class="bg-white p-6 rounded-lg shadow-sm">
             <h2 class="text-base font-medium text-gray-500 mb-4">TO-DOS</h2>
             <div class="flex items-center justify-between">
-              <p class="text-3xl font-semibold mb-1">1</p>
+              <p class="text-3xl font-semibold mb-1">{{counts.pending_task}}</p>
               <button
                 class="w-10 h-10 text-xl bg-violet-100 text-violet-500 rounded-full drop-shadow-sm"
               >
@@ -109,6 +116,7 @@
             </div>
             <p class="text-sm font-medium text-gray-400">111 Last Month</p>
           </div>
+        </a>
 
            {% comment %} end here  {% endcomment %}
         </div>

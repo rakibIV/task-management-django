@@ -1,0 +1,121 @@
+>>> employees = Employee.objects.all()
+>>> for emp in employees:
+...     print(f"Employee Name : {emp.name}")
+...     print("Task: ")
+...     for task in emp.tasks.all():
+...             print(task.title)
+...     print("\n")
+... 
+Employee Name : Danny Perry
+Task:
+Be billion improve security rate carry dog.
+Machine forget sister.
+Case sea the general analysis.
+
+
+Employee Name : William Wise MD
+Task:
+
+
+Employee Name : James Mitchell
+Task:
+Be billion improve security rate carry dog.
+Case sea the general analysis.
+
+
+Employee Name : Paige Johnson
+Task:
+New commercial common possible they travel rise.
+
+
+Employee Name : Michael Macias
+Task:
+Special position whole involve last only.
+
+
+Employee Name : Donna Johnson
+Task:
+
+
+Employee Name : Charles Torres
+Task:
+Have artist behavior compare which.
+Congress night source follow.
+Young meeting court nearly.
+
+
+Employee Name : Melissa Mcclure
+Task:
+Remain impact debate hold example outside.
+
+
+Employee Name : Teresa Heath
+Task:
+Blood need just anything through.
+Office center free past.
+Floor important difference instead.
+
+
+Employee Name : Adam Wilson
+Task:
+Be billion improve security rate carry dog.
+Court involve say responsibility institution true.
+
+
+Employee Name : Lisa Hudson
+Task:
+Might recognize adult radio.
+New commercial common possible they travel rise.
+
+
+Employee Name : Danielle Combs
+Task:
+
+
+Employee Name : Jacob Dudley
+Task:
+Office center free past.
+Resource choice usually painting.
+Certainly find available economic civil his some material.
+Case sea the general analysis.
+
+
+Employee Name : Amanda Willis
+Task:
+Special position whole involve last only.
+
+
+Employee Name : Jessica Reed
+Task:
+Machine forget sister.
+
+
+Employee Name : Noah Farrell
+Task:
+Lead particular look despite purpose lay.
+Use popular quickly little really ok.
+Court involve say responsibility institution true.
+
+
+Employee Name : Angela Cooper
+Task:
+Office center free past.
+Resource choice usually painting.
+Court involve say responsibility institution true.
+Certainly find available economic civil his some material.
+
+
+Employee Name : Douglas Cole
+Task:
+Itself like subject traditional region affect.
+These energy body however what religious without sister.
+
+
+Employee Name : Cynthia Smith
+Task:
+Floor important difference instead.
+
+
+Employee Name : Rachel Mccarty
+Task:
+New commercial common possible they travel rise.

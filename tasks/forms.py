@@ -1,5 +1,5 @@
 from django import forms
-from tasks.models import Task,Employee
+from tasks.models import Task,Employee,TaskDetail
 
 
 # Djnago Form
@@ -54,10 +54,16 @@ class StyledFormMixin:
                         "class": "pt-2 mt-3 active:shadow-blue-300 active:outline-blue-300"
                     })
                     
-                # else:
+                # elif isinstance(field.widget, forms.ChoiceField):
+                #     print("Inside choice field Widget")
                 #     field.widget.attrs.update({
                 #         "class": "border border-gray-300 p-3 rounded-lg shadow-md mb-5 focus:shadow-blue-300 focus:outline-blue-300 m-2"
                 #     })
+                    
+                else:
+                    field.widget.attrs.update({
+                        "class": "border border-gray-300 p-3 rounded-lg shadow-md mb-5 focus:shadow-blue-300 focus:outline-blue-300 m-2"
+                    })
 
 
 
@@ -93,6 +99,17 @@ class TaskModelForm(StyledFormMixin,forms.ModelForm):
         # }
         
         
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.apply_styled_widgets()
+        
+        
+        
+        
+class TaskDetailModelForm(StyledFormMixin,forms.ModelForm):
+    class Meta:
+        model = TaskDetail
+        fields = ['priority','notes']
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.apply_styled_widgets()

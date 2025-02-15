@@ -3,6 +3,55 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 import re
 
+
+class StyledFormMixin:
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.apply_styled_widgets()
+        
+    default_classes = "border border-gray-300 w-full p-2 rounded-lg shadow-md mb-5 focus:shadow-blue-300 focus:outline-blue-300"
+    
+    def apply_styled_widgets(self):
+        for field_name, field in self.fields.items():
+            if isinstance(field.widget, forms.TextInput):
+                field.widget.attrs.update({
+                    "class": self.default_classes,
+                    "placeholder": f"Enter {field.label.lower()}"
+                })
+            elif isinstance(field.widget, forms.Textarea):
+                field.widget.attrs.update({
+                    "class": self.default_classes,
+                    "placeholder": f"Enter {field.label.lower()}",
+                    "rows": 5
+                })
+            elif isinstance(field.widget, forms.SelectDateWidget):
+                field.widget.attrs.update({
+                    "class": "border border-gray-300 p-3 rounded-lg shadow-md mb-5 focus:shadow-blue-300 focus:outline-blue-300 m-2 cursor-pointer"
+                })
+                
+            elif isinstance(field.widget, forms.TimeInput):
+                field.widget.attrs.update({
+                    "type": "time",
+                    "class": "border border-gray-300 w-18 p-2 rounded-lg shadow-md mb-5 focus:shadow-blue-300 focus:outline-blue-300 cursor-pointer"
+                })
+                
+            elif isinstance(field.widget, forms.CheckboxSelectMultiple):
+                field.widget.attrs.update({
+                    "class": "space-y-2 mt-3"
+                })
+                
+            elif isinstance(field.widget,forms.EmailInput):
+                field.widget.attrs.update({
+                    "class": self.default_classes
+                })
+                
+            else:
+                field.widget.attrs.update({
+                    "class": "border border-gray-300 p-3 rounded-lg shadow-md mb-5 focus:shadow-blue-300 focus:outline-blue-300 m-2"
+                })
+
+
 class RegisterForm(UserCreationForm):
     
     class Meta:
@@ -17,7 +66,7 @@ class RegisterForm(UserCreationForm):
             
             
             
-class CustomRegistrationForm(forms.ModelForm):
+class CustomRegistrationForm(StyledFormMixin,forms.ModelForm):
     password1 = forms.CharField(widget=forms.PasswordInput)
     confirm_password = forms.CharField(widget=forms.PasswordInput)
     class Meta:
@@ -25,19 +74,42 @@ class CustomRegistrationForm(forms.ModelForm):
         fields = ['username','first_name','last_name','password1','confirm_password','email']
         
         
+        
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(email=email).exists():
+            raise forms.ValidationError('Email is already exists')
+        
+        return email
+        
+        
     def clean_password1(self):
         password1 = self.cleaned_data.get('password1')
-        
+        errors = []
         
         if len(password1) < 8:
-            raise forms.ValidationError('Password must be atleast 8 characters long')
+            errors.append('Password must be atleast 8 characters long')
         
         
-        if re.fullmatch(r'[A-Za-z0-9@#$%^&+=]', password1):
-            raise forms.ValidationError('Password must be include Uppercase,Lowercase, number and special character')
+        if not re.search(r'[A-Z]',password1):
+            errors.append('Password must contain atleast one uppercase letter')
+        
+        if not re.search(r'[a-z]',password1):
+            errors.append('Password must contain atleast one lowercase letter')
+        
+        if not re.search(r'[0-9]',password1):
+            errors.append('Password must contain atleast one digit')
+        
+        if not re.search(r'[@#$%^&*]',password1):
+            errors.append('Password must contain atleast one special character')
+            
+        if errors:
+            raise forms.ValidationError(errors)
+        
+        return password1
         
         
-    def clean(self):
+    def clean(self):  #non field errors
         cleaned_data = super().clean()
         
         password1 = cleaned_data.get('password1')
@@ -47,4 +119,9 @@ class CustomRegistrationForm(forms.ModelForm):
             raise forms.ValidationError("Password do not matched")
         
         return cleaned_data
+    
+    
+    
+    
+    
         

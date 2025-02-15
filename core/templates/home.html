@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <!-- Tailwind CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+
+    <!-- Navbar -->
+    <nav class="bg-blue-500 p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl text-white font-bold">Authentication System</h1>
+            <div>
+                {% if user.is_authenticated %}
+                    <form action="{% url 'logout' %}" method="POST" class="inline-block">
+                        {% csrf_token %}
+                        <button type="submit" class="px-4 py-2 text-white bg-red-500 rounded hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500">Logout</button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'sign-in' %}" class="px-4 py-2 text-white bg-green-500 rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500">Login</a>
+                {% endif %}
+            </div>
+            
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
+        <h1 class="mb-4 text-2xl font-bold text-center text-gray-800">Welcome Home</h1>
+
+        {% if user.is_authenticated %}
+            <div class="mb-4 text-center">
+                <p class="text-lg font-semibold text-gray-700">Hello, {{ user }}!</p>
+            </div>
+            
+            <!-- Additional Content for Authenticated Users -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="p-4 bg-gray-50 rounded-lg shadow">
+                    <h2 class="text-xl font-bold text-gray-800">Profile</h2>
+                    <p class="text-gray-600">Manage your profile details and preferences.</p>
+                    <a href="" class="inline-block mt-2 px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">Go to Profile</a>
+                </div>
+                <div class="p-4 bg-gray-50 rounded-lg shadow">
+                    <h2 class="text-xl font-bold text-gray-800">Settings</h2>
+                    <p class="text-gray-600">Update your account settings and preferences.</p>
+                    <a href="" class="inline-block mt-2 px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">Go to Settings</a>
+                </div>
+                <div class="p-4 bg-gray-50 rounded-lg shadow">
+                    <h2 class="text-xl font-bold text-gray-800">Notifications</h2>
+                    <p class="text-gray-600">Check your recent notifications and updates.</p>
+                    <a href="" class="inline-block mt-2 px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">View Notifications</a>
+                </div>
+                <div class="p-4 bg-gray-50 rounded-lg shadow">
+                    <h2 class="text-xl font-bold text-gray-800">Help</h2>
+                    <p class="text-gray-600">Find answers to common questions and support.</p>
+                    <a href="" class="inline-block mt-2 px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">Get Help</a>
+                </div>
+            </div>
+
+        {% else %}
+            <p class="text-center text-lg font-semibold text-gray-700">Unknown</p>
+        {% endif %}
+    </div>
+
+</body>
+</html>

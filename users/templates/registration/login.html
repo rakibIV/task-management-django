@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <!-- Tailwind CSS CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+     <link rel="stylesheet" href="{% static "css/output.css" %}">
+    {% comment %} <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"> {% endcomment %}
 </head>
 <body class="flex items-center justify-center h-screen bg-gray-100">
 
@@ -14,7 +16,7 @@
 
         {% if messages %}
             {% for message in messages %}
-                <div class="p-2 mb-4 text-red-600 bg-red-100 rounded">{{ message }}</div>
+                <div class="p-2 mb-4 text-green-400 bg-red-100 rounded">{{ message }}</div>
             {% endfor %}
         {% endif %}
         

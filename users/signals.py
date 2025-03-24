@@ -8,7 +8,7 @@ from django.core.mail import send_mail
 @receiver(post_save, sender=User)
 def send_activation_mail(sender, instance, created, **kwargs):
     if created:
-        print("Send activation mail to user")
+        print("Sending activation mail to user")
         token = default_token_generator.make_token(instance)
         activation_url = f"{settings.FRONTEND_URL}/users/activate/{instance.id}/{token}"
         
@@ -22,3 +22,10 @@ def send_activation_mail(sender, instance, created, **kwargs):
             
             
             
+@receiver(post_save, sender=User)
+def assign_role(sender, instance, created,**kwargs):
+    if created:
+        user_group, created = Group.objects.get_or_create(name='User')
+        instance.groups.add(user_group)
+        instance.save()
+        

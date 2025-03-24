@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,HttpResponse
 from django.contrib.auth.forms import UserCreationForm  
 from django.contrib.auth.models import User
 from users.forms import RegisterForm,CustomRegistrationForm
@@ -58,9 +58,22 @@ def sign_out(request):
     
 def activate_user(request,user_id,token):
     user = User.objects.get(id=user_id)
-    if default_token_generator.check_token(user,token):
-        user.is_active = True
-        user.save()
-        messages.success(request,"Your account is activated. Please login")
+    try :
+        if default_token_generator.check_token(user,token):
+            user.is_active = True
+            user.save()
+            messages.success(request,"Your account is activated. Please login")
+            return redirect('sign-in')
+        else :
+            messages.error(request,"Invalid token")
+            return redirect('sign-in')
+    except Exception as e:
+        messages.error(request,"Invalid token")
         return redirect('sign-in')
     
+def admin_dashboard(request):
+    users = User.objects.all()
+    context = {
+        "users":users
+    }
+    return render(request,'admin/dashboard.html',context)

@@ -1,56 +1,8 @@
-{% load static %}
+{% extends "base.html" %}
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{% block title %}{% endblock title %}</title>
-    <link rel="stylesheet" href="{% static "css/output.css" %}">
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
-
-
-    <style>
-      body{
-        font-family: 'Inter', sans-serif;
-        font-style: normal;
-
-      }
-    </style>
-  </head>
-  <body class="bg-gray-50 p-6">
-     {% comment %} Header  {% endcomment %}
-    <div class="max-width-[1400px] w-[85%] mx-auto">
-      <header class="flex justify-between items-center">
-        <h1 class="text-2xl font-semibold">Dashboard</h1>
-
-        <div class="flex items-center space-x-8">
-          <button class="w-12 p-2 rounded-full hover:bg-gray-200 opacity-75">
-            <i class="fa-regular fa-bell text-2xl"></i>
-          </button>
-
-          <button
-            class="w-10 h-10 bg-blue-500 rounded-full text-white font-semibold"
-          >
-            B
-          </button>
-        </div>
-      </header>
-
-      <main class="mt-10">
-         {% comment %} Stats Grid  {% endcomment %}
+{% block content %}
+<div class = "my-6 p-8 w-[85%] mx-auto">
+ {% comment %} Stats Grid  {% endcomment %}
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <!-- Total Task -->
           <a href="{% url 'manager-dashboard' %}?type=all">
@@ -126,9 +78,6 @@
         {% endblock tasks %}
 
         
-      </main>
-    </div>
+</div>
 
-    {% include "footer.html" %}
-  </body>
-</html>
+{% endblock content %}

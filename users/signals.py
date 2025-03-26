@@ -26,6 +26,8 @@ def send_activation_mail(sender, instance, created, **kwargs):
 def assign_role(sender, instance, created,**kwargs):
     if created:
         user_group, created = Group.objects.get_or_create(name='User')
+        user_group.is_staff = True
         instance.groups.add(user_group)
+        instance.is_staff = True
         instance.save()
         

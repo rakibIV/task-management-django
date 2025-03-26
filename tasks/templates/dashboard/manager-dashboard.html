@@ -26,12 +26,7 @@
 <div class="grid grid-cols-4 p-4 gap-4 items-center">
   <div class="flex items-center space-x-2">
     <div class="w-2 h-2 bg-green-500 rounded-full"></div>
-    <div><span>{{task.title}}</span></div>
-    <a href = "{% url "update-task" task.id %}" class = "px-2 py-1"><i class="fa-solid fa-pen-to-square"></i></a>
-    <form action="{% url "delete-task" task.id %}" method = "POST">
-      {% csrf_token %}
-      <button type = 'submit' class = "px-2 py-1"><i class="fa-solid fa-trash text-red-500"></i></button>
-    </form>
+    <div><a href="{% url 'task-details' task.id %} " class="font-medium">{{task.title}}</a></div>
   </div>
   <div>
     {% if task.details.priority == 'H' %}
@@ -48,7 +43,7 @@
       {% for emp in task.assigned_to.all %}
       <div
       class="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center border-2 border-white">
-      {{emp.name|slice:":1"}}
+      {{emp.first_name.upper|slice:":1"}}
     </div>
       {% endfor %}
 

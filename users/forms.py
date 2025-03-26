@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm  
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group, Permission
 import re
 
 
@@ -10,19 +10,19 @@ class StyledFormMixin:
         super().__init__(*args, **kwargs)
         self.apply_styled_widgets()
         
-    default_classes = "border border-gray-300 w-full p-2 rounded-lg shadow-md mb-5 focus:shadow-blue-300 focus:outline-blue-300"
+    default_classes = "w-full px-3 py-2 border rounded border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 m-3"
     
     def apply_styled_widgets(self):
         for field_name, field in self.fields.items():
             if isinstance(field.widget, forms.TextInput):
                 field.widget.attrs.update({
                     "class": self.default_classes,
-                    "placeholder": f"Enter {field.label.lower()}"
+                    "placeholder": f"{field.label}"
                 })
             elif isinstance(field.widget, forms.Textarea):
                 field.widget.attrs.update({
                     "class": self.default_classes,
-                    "placeholder": f"Enter {field.label.lower()}",
+                    "placeholder": f"{field.label}",
                     "rows": 5
                 })
             elif isinstance(field.widget, forms.SelectDateWidget):
@@ -43,7 +43,13 @@ class StyledFormMixin:
                 
             elif isinstance(field.widget,forms.EmailInput):
                 field.widget.attrs.update({
-                    "class": self.default_classes
+                    "class": self.default_classes,
+                    "placeholder": f"{field.label}"
+                })
+            elif isinstance(field.widget,forms.PasswordInput):
+                field.widget.attrs.update({
+                    "class": self.default_classes,
+                    "placeholder": f"Password",
                 })
                 
             else:
@@ -119,6 +125,25 @@ class CustomRegistrationForm(StyledFormMixin,forms.ModelForm):
             raise forms.ValidationError("Password do not matched")
         
         return cleaned_data
+    
+    
+class AssignRoleForm(forms.Form):
+    role = forms.ModelChoiceField(queryset=Group.objects.all(), empty_label="Select Role")
+    
+    
+    
+    
+class CreateGroupForm(StyledFormMixin,forms.ModelForm):
+    permissions = forms.ModelMultipleChoiceField(
+        queryset=Permission.objects.all(),
+        widget = forms.CheckboxSelectMultiple,
+        required = False,
+        label="Select Permission"
+        )
+    
+    class Meta:
+        model = Group
+        fields = ['name','permissions']
     
     
     

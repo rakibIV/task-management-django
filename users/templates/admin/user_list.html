@@ -42,10 +42,10 @@
                     <td class="px-4 py-4 whitespace-nowrap">{{user.first_name}}</td>
                     <td class="px-4 py-4 whitespace-nowrap">{{user.email}}</td>
                     <td class="px-4 py-4 whitespace-nowrap">{{user.id}}</td>
-                    <td class="px-4 py-4 whitespace-nowrap">{{user.group.first.name|default:"No Group assigned"}}</td>
+                    <td class="px-4 py-4 whitespace-nowrap">{{user.group_name}}</td>
                     <td class="px-4 py-4 whitespace-nowrap">
                     <a
-                        href="assign-role.html?id=12345"
+                        href="{% url "assign-role" user.id %}"
                         class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
                     >
                         Change Role

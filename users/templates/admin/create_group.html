@@ -1,7 +1,7 @@
-{% extends "admin/dashboard.html" %}
+{% extends "base.html" %}
 {% block content %}
 
-    <div class= "w-1/2 mx-auto my-8 pb-5">
+    <div class= "w-1/2 mx-auto my-4 pb-5">
         <form method= "POST">
             {% csrf_token %}
             {{form}}

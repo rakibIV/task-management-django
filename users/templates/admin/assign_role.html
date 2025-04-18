@@ -1,7 +1,7 @@
-{% extends "admin/dashboard.html" %}
+{% extends "base.html" %}
 {% block content %}
 
-    <div>
+    <div class="container min-h-screen mx-auto mt-5">
         <form method= "POST">
             {% csrf_token %}
             {{ form.role.label_tag }} 

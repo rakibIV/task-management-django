@@ -11,11 +11,16 @@
 
         {% if messages %}
             {% for message in messages %}
-                <div class="p-2 mb-4 text-green-400 bg-red-100 rounded">{{ message }}</div>
+                {% if message.level_tag == 'success' %}
+                    <div class="p-2 mb-4 text-green-600 bg-green-100 rounded">{{ message }}</div>
+                {% else %}
+                    <div class="p-2 mb-4 text-red-600 bg-red-100 rounded">{{ message }}</div>
+                {% endif %}
+                
             {% endfor %}
         {% endif %}
-        
-        <form method="POST" class="space-y-4">
+                
+        <form method="POST" class="space-y-4 mb-5">
             {% csrf_token %}
             <div>
                 <input type="text" name="username" placeholder="Username" class="w-full px-3 py-2 border rounded border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
@@ -27,6 +32,7 @@
             
             <button type="submit" class="w-full py-2 text-white bg-blue-500 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">Sign in</button>
         </form>
+        <a class = "text-blue-500" href="{% url 'password-reset' %}">Forgot password?</a>
     </div>
 
 </div>

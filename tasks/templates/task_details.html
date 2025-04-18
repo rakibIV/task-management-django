@@ -139,7 +139,7 @@
               <h2 class="text-xl font-bold mb-4">ASSETS</h2>
               <div class="space-y-4">
                     <img
-                    src={{task.details.asset.url}}
+                    src= {% if task.details.asset %}{{task.details.asset.url}}{% endif %}
                     alt="Task Manager App Screenshot 1"
                     class="w-full rounded-lg"
                     />

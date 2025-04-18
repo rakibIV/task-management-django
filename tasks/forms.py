@@ -27,7 +27,7 @@ class StyledFormMixin:
     
     
     def apply_styled_widgets(self):
-        default_classes = "w-full px-3 py-2 border rounded border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 m-3"
+        default_classes = "w-full px-3 py-2 m-5 border rounded border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
         for field_name, field in self.fields.items():
             for field_name, field in self.fields.items():
                 if isinstance(field.widget, forms.TextInput):
@@ -76,7 +76,7 @@ class StyledFormMixin:
 class TaskModelForm(StyledFormMixin,forms.ModelForm):
     class Meta:
         model = Task
-        fields = ["title","description","due_date", "assigned_to"]
+        fields = ["title","projects","description","due_date", "assigned_to"]
         widgets = {
             "due_date": forms.SelectDateWidget,
             "assigned_to": forms.CheckboxSelectMultiple

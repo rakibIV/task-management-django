@@ -1,4 +1,8 @@
-<div class="container mx-auto p-6">
+{% extends "base.html" %}
+{% block title %}Admin Dashboard{% endblock title %}
+{% block content %}
+<div class = "bg-white min-h-screen">
+  <div class="container mx-auto p-6">
     <div class="overflow-x-auto">
       <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
         <thead class="bg-gray-100">
@@ -55,7 +59,13 @@
 
           {% endfor %}
           
-        </tbody>
-      </table>
+          </tbody>
+          </table>
+        </div>
     </div>
-  </div>
+</div>
+  
+
+
+
+{% endblock content %}

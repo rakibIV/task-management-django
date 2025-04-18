@@ -1,8 +1,12 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm  
-from django.contrib.auth.models import User, Group, Permission
+from django.contrib.auth.models import Group, Permission
 import re
+from django.contrib.auth.forms import PasswordChangeForm, PasswordResetForm, SetPasswordForm
+from users.models import CustomUser
+from django.contrib.auth import get_user_model
 
+User = get_user_model()
 
 class StyledFormMixin:
     
@@ -10,10 +14,11 @@ class StyledFormMixin:
         super().__init__(*args, **kwargs)
         self.apply_styled_widgets()
         
-    default_classes = "w-full px-3 py-2 border rounded border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 m-3"
+    default_classes = "w-full px-3 py-2 border rounded border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 mt-2 m-3"
     
     def apply_styled_widgets(self):
         for field_name, field in self.fields.items():
+
             if isinstance(field.widget, forms.TextInput):
                 field.widget.attrs.update({
                     "class": self.default_classes,
@@ -56,6 +61,33 @@ class StyledFormMixin:
                 field.widget.attrs.update({
                     "class": "border border-gray-300 p-3 rounded-lg shadow-md mb-5 focus:shadow-blue-300 focus:outline-blue-300 m-2"
                 })
+                
+class FormMixinForRemovingLabel(StyledFormMixin):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.label = ""
+                
+                
+class FormMixinForChangePassword(StyledFormMixin):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['old_password'].widget.attrs.update({
+            "class": self.default_classes,
+            "placeholder": "Old Password"
+        })
+        self.fields['old_password'].label = ""
+        self.fields['new_password1'].widget.attrs.update({
+            "class": self.default_classes,
+            "placeholder": "New Password"
+        })
+        self.fields['new_password1'].label = ""
+        
+        self.fields['new_password2'].widget.attrs.update({
+            "class": self.default_classes,
+            "placeholder": "Confirm New Password"
+        })
+        self.fields['new_password2'].label = ""
 
 
 class RegisterForm(UserCreationForm):
@@ -127,8 +159,12 @@ class CustomRegistrationForm(StyledFormMixin,forms.ModelForm):
         return cleaned_data
     
     
-class AssignRoleForm(forms.Form):
+class AssignRoleForm(forms.ModelForm):
     role = forms.ModelChoiceField(queryset=Group.objects.all(), empty_label="Select Role")
+    
+    class Meta:
+        model = User
+        fields = []
     
     
     
@@ -144,7 +180,40 @@ class CreateGroupForm(StyledFormMixin,forms.ModelForm):
     class Meta:
         model = Group
         fields = ['name','permissions']
+        
+class PassChangeForm(FormMixinForChangePassword,PasswordChangeForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        
+        for field_name in self.fields:
+            self.fields[field_name].help_text = None
+            
+            
+            
+class PassResetForm(FormMixinForRemovingLabel,PasswordResetForm):
+    pass
+
+
+class PassResetConfirmForm(FormMixinForRemovingLabel,SetPasswordForm):
+     def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        
+        for field_name in self.fields:
+            self.fields[field_name].help_text = None
+            
+            
+            
+            
+            
+
+class EditProfileForm(StyledFormMixin, forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ['email', 'first_name', 'last_name', 'bio', 'profile_image']
     
+    
+    
+
     
     
     
